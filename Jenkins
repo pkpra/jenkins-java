@@ -1,11 +1,13 @@
 
 pipeline {
     agent any
-
+    environment {
+       PATH = "/opt/maven3/bin:$PATH"
+       }
     stages {
-        stage('Build') {
-            steps {
-                echo 'Building..'
+        stage('git checkout') {
+            steps { 
+                git credentialid: 'jenkins-java'
             }
         }
         stage('Test') {
