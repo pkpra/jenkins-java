@@ -1,18 +1,35 @@
 pipeline {
     agent any
-
-stages{
-    stage('Git Checkout'){
-                   steps{
-                   git credentialsId: '11', url: 'https://github.com/pkpra/jenkins-java.git'
+    environment {
+       PATH = "/opt/maven3/bin:$PATH"
+       }
+    stages {
+        stage('Git checkout') {
+            steps { 
+                git credentialsId: '121', url: 'https://github.com/pkpra/jenkins-java.git'
+            }
+        }
+        stage('Maven Build') {
+            steps {
+                sh '''
+                   mvn clean package
+                   mv target/*.war target/myweb.war
+                   
+      '''
+       
+          
+            }
+        }
+        stage('Deploy') {
+            steps {
+                  sshagent(credentials: ['iam'], ignoreMissing: true) {
+                  sh """
+                         scp target/myweb.war root@ip-172-31-85-44:/home/ubuntu/apache-tomcat-9.0.59/webapps
+                         sh root@ip-172-31-85-44:/home/ubuntu/apache-tomcat-9.0.59/bin/shutdown.sh
+                         sh root@ip-172-31-85-44:/home/ubuntu/apache-tomcat-9.0.59/bin/startup.sh
+                  """
               }
-          }
-
-        stage ('Deployments'){
-           
-                    steps {
-                        sh "scp -i /home/jenkins/tomcat-demo.pem **/target/*.war root-user@ip-172-31-85-44::/var/lib/Apache Tomcat/9.0.59/webapps"
-                    }
+            } 
         }
     }
 }
