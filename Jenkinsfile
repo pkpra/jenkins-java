@@ -2,7 +2,7 @@ pipeline {
     agent any
 
 stages{
-    stage(Git Checkout'){
+    stage('Git Checkout'){
                    steps{
                    git credentialsId: '11', url: 'https://github.com/pkpra/jenkins-java.git'
               }
