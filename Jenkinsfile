@@ -14,7 +14,7 @@ pipeline {
             steps {
                   sshagent(credentials: ['iam'], ignoreMissing: true) {
                   sh """
-                         scp -o StrictHostKeyChecking=no target/myweb.war root@ip-172-31-85-44:/home/ubuntu/apache-tomcat-9.0.59/webapps
+                         scp -o StrictHostKeyChecking=no target/myweb.war ubuntu@ip-172-31-85-44:/home/ubuntu/apache-tomcat-9.0.59/webapps
                          sh root@ip-172-31-85-44:/home/ubuntu/apache-tomcat-9.0.59/bin/shutdown.sh
                          sh root@ip-172-31-85-44:/home/ubuntu/apache-tomcat-9.0.59/bin/startup.sh
                   """
