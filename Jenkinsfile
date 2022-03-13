@@ -7,17 +7,6 @@ stages{
                    git credentialsId: '11', url: 'https://github.com/pkpra/jenkins-java.git'
               }
           }
-    stage('Build'){
-            steps {
-                sh 'mvn clean package'
-            }
-            post {
-                success {
-                    echo 'Now Archiving...'
-                    archiveArtifacts artifacts: '**/target/*.war'
-                }
-            }
-        }
 
         stage ('Deployments'){
            
