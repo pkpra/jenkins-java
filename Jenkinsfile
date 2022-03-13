@@ -1,10 +1,5 @@
 pipeline {
     agent any
-    
-    parameters { 
-         string(name: 'tomcat_dev', defaultValue: '35.166.210.154', description: 'Staging Server')
-         
-    } 
 
 stages{
     stage(Git Checkout'){
@@ -27,7 +22,7 @@ stages{
         stage ('Deployments'){
            
                     steps {
-                        sh "scp -i /home/jenkins/tomcat-demo.pem **/target/*.war root-user@${params.tomcat_dev}:/var/lib/Apache Tomcat/9.0.59/webapps"
+                        sh "scp -i /home/jenkins/tomcat-demo.pem **/target/*.war root-user@ip-172-31-85-44::/var/lib/Apache Tomcat/9.0.59/webapps"
                     }
         }
     }
