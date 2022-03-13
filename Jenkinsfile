@@ -9,17 +9,7 @@ pipeline {
                 git credentialsId: '121', url: 'https://github.com/pkpra/jenkins-java.git'
             }
         }
-        stage('Maven Build') {
-            steps {
-                sh '''
-                   mvn clean package
-                   mv target/*.war target/myweb.war
-                   
-      '''
        
-          
-            }
-        }
         stage('Deploy') {
             steps {
                   sshagent(credentials: ['iam'], ignoreMissing: true) {
